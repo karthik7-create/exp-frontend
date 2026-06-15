@@ -1,0 +1,34 @@
+.layout {
+  display: flex;
+  min-height: 100vh;
+  background: var(--bg-primary);
+}
+
+.layout__main {
+  flex: 1;
+  margin-left: var(--sidebar-width);
+  padding-top: var(--topbar-height);
+  min-height: 100vh;
+}
+
+.layout__content {
+  padding: 28px;
+  animation: fadeIn 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .layout__main {
+    margin-left: 0;
+    padding-bottom: 80px;
+  }
+
+  .layout__content {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .layout__content {
+    padding: 12px;
+  }
+}

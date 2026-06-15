@@ -1,0 +1,53 @@
+.falling-text {
+  display: inline-block;
+  perspective: 1200px;
+}
+
+.falling-word {
+  display: inline-block;
+  white-space: nowrap;
+  opacity: 0;
+  animation: fallAndBounce 0.8s forwards;
+}
+
+.falling-space {
+  display: inline-block;
+}
+
+@keyframes fallAndBounce {
+  0% {
+    opacity: 0;
+    transform: translateY(-150px);
+    animation-timing-function: ease-in;
+  }
+  35% {
+    opacity: 1;
+    transform: translateY(0);
+    animation-timing-function: ease-out;
+  }
+  55% {
+    transform: translateY(-30px);
+    animation-timing-function: ease-in;
+  }
+  75% {
+    transform: translateY(0);
+    animation-timing-function: ease-out;
+  }
+  90% {
+    transform: translateY(-10px);
+    animation-timing-function: ease-in;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.text-gradient .falling-word {
+  background: linear-gradient(135deg, #4ade80, #22c55e);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  /* Prevent the blur filter from interfering with the transparent text fill */
+  filter: drop-shadow(0 0 10px rgba(74, 222, 128, 0.2));
+}

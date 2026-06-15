@@ -1,0 +1,21 @@
+.tilt-container {
+  perspective: 1500px;
+  width: 100%;
+  max-width: 440px;
+  z-index: 10;
+}
+
+.tilt-card {
+  transition: transform 0.1s ease-out;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.tilt-card:not(.hovered) {
+  transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.tilt-card > * {
+  /* Push inner elements outward for a deep 3D effect */
+  transform: translateZ(20px);
+}

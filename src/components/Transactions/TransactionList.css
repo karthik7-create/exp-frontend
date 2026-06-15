@@ -1,0 +1,324 @@
+.transactions-page {
+  animation: slideUp 0.4s ease;
+}
+
+/* ─── Filter Bar ─── */
+.filter-bar {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.filter-bar .form-group {
+  min-width: 140px;
+  flex: 1;
+}
+
+.filter-bar__clear {
+  margin-bottom: 0;
+  white-space: nowrap;
+}
+
+/* ─── Transactions Table ─── */
+.tx-table-wrap {
+  padding: 0;
+  overflow: hidden;
+}
+
+.tx-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tx-table th {
+  padding: 14px 20px;
+  text-align: left;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--border-color);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.tx-table td {
+  padding: 14px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  font-size: 0.875rem;
+  vertical-align: middle;
+}
+
+.tx-table tbody tr {
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.3s, box-shadow 0.3s;
+  position: relative;
+}
+
+.tx-table tbody tr:hover {
+  background: var(--glass-bg);
+  transform: translateY(-6px);
+  z-index: 10;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}
+
+.tx-row--income:hover {
+  border-left: 3px solid #00ff88;
+  background: linear-gradient(90deg, rgba(0, 255, 136, 0.05), transparent);
+}
+
+.tx-row--expense:hover {
+  border-left: 3px solid #ff2244;
+  background: linear-gradient(90deg, rgba(255, 34, 68, 0.05), transparent);
+}
+
+.tx-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.tx-cell-category {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tx-cell-category__icon {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  background: var(--glass-bg);
+  flex-shrink: 0;
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.tx-table tbody tr:hover .tx-cell-category__icon {
+  transform: rotate(360deg) scale(1.1);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+}
+
+.tx-cell-category__name {
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.tx-cell-desc {
+  color: var(--text-primary);
+  font-weight: 500;
+  max-width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tx-cell-date {
+  color: var(--text-secondary);
+  font-size: 0.8125rem;
+}
+
+.tx-cell-amount {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  transition: text-shadow 0.3s;
+}
+
+.tx-table tbody tr:hover .amount--income {
+  text-shadow: 0 0 10px rgba(0, 255, 136, 0.6);
+  animation: pulse 1s infinite;
+}
+
+.tx-table tbody tr:hover .amount--expense {
+  text-shadow: 0 0 10px rgba(255, 34, 68, 0.6);
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.tx-cell-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.tx-cell-actions .btn-icon {
+  font-size: 1rem;
+  color: var(--text-muted);
+}
+
+.tx-cell-actions .btn-icon:hover {
+  color: var(--text-primary);
+}
+
+.tx-cell-actions .btn-icon--delete:hover {
+  color: var(--danger);
+  background: rgba(239, 68, 68, 0.1);
+}
+
+/* ─── Mobile Card View ─── */
+.tx-cards {
+  display: none;
+}
+
+.tx-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.tx-card:last-child {
+  border-bottom: none;
+}
+
+.tx-card__icon {
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  background: var(--glass-bg);
+  flex-shrink: 0;
+}
+
+.tx-card__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.tx-card__desc {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tx-card__meta {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-top: 3px;
+}
+
+.tx-card__right {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.tx-card__amount {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.tx-card__actions {
+  display: flex;
+  gap: 4px;
+  margin-top: 6px;
+  justify-content: flex-end;
+}
+
+@media (max-width: 768px) {
+  .tx-table-desktop {
+    display: none;
+  }
+
+  .tx-cards {
+    display: block;
+  }
+}
+
+/* ─── Transaction Form ─── */
+.tx-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.tx-form__type-toggle {
+  display: flex;
+  gap: 0;
+  background: var(--glass-bg);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+}
+
+.tx-form__type-btn {
+  flex: 1;
+  padding: 10px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  transition: var(--transition);
+  border: none;
+  background: transparent;
+}
+
+.tx-form__type-btn--active {
+  color: #fff;
+}
+
+.tx-form__type-btn--income.tx-form__type-btn--active {
+  background: var(--gradient-income);
+}
+
+.tx-form__type-btn--expense.tx-form__type-btn--active {
+  background: var(--gradient-expense);
+}
+
+.tx-form__actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+.btn--cyan-green {
+  background: linear-gradient(135deg, #00d4ff, #00ff88);
+  border: none;
+  color: #1a1a2e;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.btn--cyan-green:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
+}
+
+.btn--cyan-green::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  background: rgba(255,255,255,0.8);
+  opacity: 0;
+  border-radius: 100%;
+  transform: scale(1, 1) translate(-50%, -50%);
+  transform-origin: 50% 50%;
+}
+
+.btn--cyan-green:active::after {
+  animation: ripple 0.6s ease-out;
+}
+
+@keyframes ripple {
+  0% { transform: scale(0, 0); opacity: 0.5; }
+  100% { transform: scale(20, 20); opacity: 0; }
+}

@@ -1,0 +1,125 @@
+.stat-card {
+  position: relative;
+  padding: 24px;
+  border-radius: 20px;
+  overflow: hidden;
+  cursor: default;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+}
+
+.stat-card--income::before { background: var(--gradient-income); }
+.stat-card--expense::before { background: var(--gradient-expense); }
+.stat-card--savings::before { background: var(--gradient-savings); }
+.stat-card--balance::before { background: var(--gradient-balance); }
+
+.stat-card:hover.stat-card--income { box-shadow: 0 0 60px rgba(0, 255, 136, 0.2); border-color: #00ff88; }
+.stat-card:hover.stat-card--expense { box-shadow: 0 0 60px rgba(255, 34, 68, 0.2); border-color: #ff2244; }
+.stat-card:hover.stat-card--savings { box-shadow: 0 0 60px rgba(136, 85, 255, 0.2); border-color: #8855ff; }
+.stat-card:hover.stat-card--balance { box-shadow: 0 0 60px rgba(255, 215, 0, 0.2); border-color: #ffd700; }
+
+.stat-card__inner {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  position: relative;
+  z-index: 2;
+}
+
+.stat-card__icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  font-size: 1.5rem;
+}
+
+.stat-card__icon-wrapper--income { background: rgba(0, 255, 136, 0.1); color: #00ff88; }
+.stat-card__icon-wrapper--expense { background: rgba(255, 34, 68, 0.1); color: #ff2244; }
+.stat-card__icon-wrapper--savings { background: rgba(136, 85, 255, 0.1); color: #8855ff; }
+.stat-card__icon-wrapper--balance { background: rgba(255, 215, 0, 0.1); color: #ffd700; }
+
+.stat-card__content {
+  flex: 1;
+}
+
+.stat-card__title {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.stat-card__value {
+  font-size: 1.75rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.stat-card__value--income { color: #00ff88; text-shadow: 0 0 10px rgba(0,255,136,0.3); }
+.stat-card__value--expense { color: #ff2244; text-shadow: 0 0 10px rgba(255,34,68,0.3); }
+.stat-card__value--savings { color: #8855ff; text-shadow: 0 0 10px rgba(136,85,255,0.3); }
+.stat-card__value--balance { color: #ffd700; text-shadow: 0 0 10px rgba(255,215,0,0.3); }
+
+/* Custom Animations from Prompt */
+.stat-card:hover .stat-card__icon-wrapper--income { animation: bounce 0.5s ease infinite alternate; }
+.stat-card:hover .stat-card__icon-wrapper--expense { animation: heartbeat 0.8s ease infinite; }
+.stat-card:hover .stat-card__icon-wrapper--savings { animation: spin 4s linear infinite; }
+.stat-card:hover .stat-card__icon-wrapper--balance { animation: tip 2s ease infinite alternate; }
+
+@keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-8px); } }
+@keyframes heartbeat { 0% { transform: scale(1); } 15% { transform: scale(1.2); } 30% { transform: scale(1); } 45% { transform: scale(1.2); } 60%, 100% { transform: scale(1); } }
+@keyframes tip { from { transform: rotate(-15deg); } to { transform: rotate(15deg); } }
+
+/* CSS Particles using before/after */
+.stat-card__particles {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.stat-card:hover .stat-card__particles {
+  opacity: 1;
+}
+
+.stat-card__particles--income::after {
+  content: ''; position: absolute; bottom: 20px; right: 20px; width: 4px; height: 4px;
+  background: #00ff88; border-radius: 50%; box-shadow: 0 -10px 0 #00ff88, 10px -20px 0 #00ff88, -10px -30px 0 #00ff88;
+  animation: floatUp 2s linear infinite;
+}
+
+.stat-card__particles--expense::after {
+  content: ''; position: absolute; top: 20px; right: 20px; width: 4px; height: 4px;
+  background: #ff2244; border-radius: 50%; box-shadow: 0 10px 0 #ff2244, 10px 20px 0 #ff2244, -10px 30px 0 #ff2244;
+  animation: floatDown 2s linear infinite;
+}
+
+.stat-card__particles--savings::after {
+  content: ''; position: absolute; top: 50%; right: 40px; width: 4px; height: 4px;
+  background: #8855ff; border-radius: 50%; box-shadow: 0 10px 0 #8855ff, 10px 0 0 #8855ff, -10px 0 0 #8855ff, 0 -10px 0 #8855ff;
+  animation: orbit 3s linear infinite;
+}
+
+.stat-card__value--balance { position: relative; overflow: hidden; display: inline-block; }
+.stat-card__value--balance::after {
+  content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.4), transparent);
+  animation: shimmerSweep 5s infinite;
+}
+
+@keyframes floatUp { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(-40px); opacity: 0; } }
+@keyframes floatDown { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(40px); opacity: 0; } }
+@keyframes orbit { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+@keyframes shimmerSweep { 0%, 80% { left: -100%; } 100% { left: 200%; } }
