@@ -6,6 +6,7 @@ import SavingsGoalForm from './SavingsGoalForm';
 import ConfirmDialog from '../Common/ConfirmDialog';
 import LoadingSpinner from '../Common/LoadingSpinner';
 import { showSuccess, showError } from '../Common/Toast';
+import EmojiConfetti from '../Common/EmojiConfetti';
 import './Savings.css';
 
 export default function SavingsGoals() {
@@ -15,6 +16,8 @@ export default function SavingsGoals() {
   const [editingGoal, setEditingGoal] = useState(null);
   const [addFundsGoal, setAddFundsGoal] = useState(null);
   const [confirmDelete, setConfirmDelete] = useState(null);
+  const [showCelebration, setShowCelebration] = useState(false);
+  const [initialLoad, setInitialLoad] = useState(true);
 
   useEffect(() => {
     fetchGoals();
@@ -25,6 +28,14 @@ export default function SavingsGoals() {
       setLoading(true);
       const res = await api.get('/savings-goals');
       setGoals(res.data);
+      
+      if (initialLoad) {
+        const hasCompleted = res.data.some(goal => goal.status === 'COMPLETED');
+        if (hasCompleted) {
+          setShowCelebration(true);
+        }
+        setInitialLoad(false);
+      }
     } catch (err) {
       showError('Failed to load savings goals');
     } finally {
@@ -44,10 +55,13 @@ export default function SavingsGoals() {
     }
   };
 
-  const handleFormSave = () => {
+  const handleFormSave = (isCompleted) => {
     setShowForm(false);
     setEditingGoal(null);
     setAddFundsGoal(null);
+    if (isCompleted) {
+      setShowCelebration(true);
+    }
     fetchGoals();
   };
 
@@ -218,6 +232,16 @@ export default function SavingsGoals() {
           onConfirm={handleDelete}
           onCancel={() => setConfirmDelete(null)}
           variant="danger"
+        />
+      )}
+
+      {showCelebration && (
+        <EmojiConfetti 
+          duration={6000} 
+          type="celebration"
+          title="Goal Achieved!"
+          message="Congratulations! You have successfully reached your savings goal. Keep up the amazing work!"
+          onComplete={() => setShowCelebration(false)} 
         />
       )}
     </div>
