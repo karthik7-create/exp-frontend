@@ -6,6 +6,7 @@ import BudgetForm from './BudgetForm';
 import ConfirmDialog from '../Common/ConfirmDialog';
 import LoadingSpinner from '../Common/LoadingSpinner';
 import { showSuccess, showError } from '../Common/Toast';
+import EmojiConfetti from '../Common/EmojiConfetti';
 import './Budget.css';
 
 export default function BudgetOverview() {
@@ -17,6 +18,8 @@ export default function BudgetOverview() {
   const [showForm, setShowForm] = useState(false);
   const [editingBudget, setEditingBudget] = useState(null);
   const [confirmDelete, setConfirmDelete] = useState(null);
+  const [showWarning, setShowWarning] = useState(false);
+  const [initialLoad, setInitialLoad] = useState(true);
 
   useEffect(() => {
     fetchBudgets();
@@ -27,6 +30,14 @@ export default function BudgetOverview() {
       setLoading(true);
       const res = await api.get('/budgets', { params: { month, year } });
       setBudgets(res.data);
+      
+      if (initialLoad && res.data.length > 0) {
+        const hasOverBudget = res.data.some(b => b.amountLimit > 0 && (b.spent / b.amountLimit) >= 1);
+        if (hasOverBudget) {
+          setShowWarning(true);
+        }
+        setInitialLoad(false);
+      }
     } catch (err) {
       showError('Failed to load budgets');
     } finally {
@@ -198,6 +209,16 @@ export default function BudgetOverview() {
           onConfirm={handleDelete}
           onCancel={() => setConfirmDelete(null)}
           variant="danger"
+        />
+      )}
+
+      {showWarning && (
+        <EmojiConfetti 
+          duration={6000} 
+          type="warning"
+          title="Budget Exceeded!"
+          message="Warning: You have crossed your budget limit for one or more categories this month. Please review your spending."
+          onComplete={() => setShowWarning(false)} 
         />
       )}
     </div>

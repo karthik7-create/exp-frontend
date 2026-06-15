@@ -34,7 +34,9 @@ export default function SavingsGoalForm({ goal, addFundsMode, addFundsGoal, onSa
         amount: Number(fundsAmount),
       });
       showSuccess('Funds added successfully!');
-      onSave();
+      
+      const isCompleted = (addFundsGoal.currentAmount + Number(fundsAmount)) >= addFundsGoal.targetAmount;
+      onSave(isCompleted);
     } catch (err) {
       showError(err.response?.data?.message || 'Failed to add funds');
     } finally {
