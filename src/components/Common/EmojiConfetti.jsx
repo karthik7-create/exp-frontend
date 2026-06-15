@@ -3,6 +3,7 @@ import './EmojiConfetti.css';
 
 export default function EmojiConfetti({ duration = 6000, type = 'celebration', title, message, onComplete }) {
   const [flakes, setFlakes] = useState([]);
+  const [showMessage, setShowMessage] = useState(true);
   const isWarning = type === 'warning';
   
   const EMOJIS = isWarning 
@@ -26,12 +27,25 @@ export default function EmojiConfetti({ duration = 6000, type = 'celebration', t
       if (onComplete) onComplete();
     }, duration);
 
-    return () => clearTimeout(timer);
+    const handleGlobalClick = () => {
+      setShowMessage(false);
+    };
+
+    // Add listener after a tiny delay so the click that triggered the confetti doesn't close it
+    const clickDelay = setTimeout(() => {
+      window.addEventListener('click', handleGlobalClick);
+    }, 100);
+
+    return () => {
+      clearTimeout(timer);
+      clearTimeout(clickDelay);
+      window.removeEventListener('click', handleGlobalClick);
+    };
   }, [duration, onComplete]);
 
   return (
     <div className={`emoji-confetti-container ${isWarning ? 'warning-mode' : ''}`}>
-      {message && (
+      {message && showMessage && (
         <div className={`confetti-message-overlay ${isWarning ? 'warning' : 'success'}`}>
           <div className="confetti-message-icon">{isWarning ? '🚨' : '🏆'}</div>
           {title && <h2 className="confetti-message-title">{title}</h2>}
